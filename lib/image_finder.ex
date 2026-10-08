@@ -9,7 +9,7 @@ defmodule ImageFinder do
   def name_application() do
     Process.register(self(), ImageFinder)
   end
- 
+
   def fetch(source_file, target_directory) do
     GenServer.call(Worker1, {:fetch, source_file, target_directory})
   end

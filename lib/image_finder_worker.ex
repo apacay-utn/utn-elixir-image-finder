@@ -14,6 +14,7 @@ defmodule ImageFinder.Worker do
     regexp = ~r/http(s?)\:.*?\.(png|jpg|gif)/
     scanResult = Regex.scan(regexp, content)
     links = Enum.map(scanResult, fn [match | _] -> match end)
+    IO.puts("Found #{length(links)} links in #{source_file}")
     Enum.map(links, fn link -> fetch_link(link, target_directory) end)
     {:reply, :ok, state}
   end
@@ -28,6 +29,7 @@ defmodule ImageFinder.Worker do
   end
 
   def save(body, directory) do
+    IO.puts("Saving file #{digest(body)} in #{directory}")
     File.write!("#{directory}/#{digest(body)}", body)
   end
 end
